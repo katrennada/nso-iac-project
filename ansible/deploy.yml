@@ -1,7 +1,0 @@
----
-- name: Déploiement configuration SD-WAN site A
-  hosts: sdwan_sites
-  gather_facts: no
-  tasks:
-    - name: Exemple ping
-      ping:
