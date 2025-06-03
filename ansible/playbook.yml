@@ -1,0 +1,29 @@
+---
+- name: Configure network devices via NSO
+  hosts: nso
+  gather_facts: no
+  connection: local
+  vars:
+    nso_host: "127.0.0.1"
+    nso_port: 8080
+    nso_username: "admin"
+    nso_password: "admin"
+  tasks:
+    - name: Push simple config to NSO
+      uri:
+        url: "http://{{ nso_host }}:{{ nso_port }}/api/running/devices/device/ios1/config"
+        method: PUT
+        user: "{{ nso_username }}"
+        password: "{{ nso_password }}"
+        body: |
+          {
+            "config": {
+              "interface": {
+                "name": "GigabitEthernet0/0",
+                "description": "Configured by Ansible"
+              }
+            }
+          }
+        status_code: 204
+        force_basic_auth: yes
+      delegate_to: localhost
